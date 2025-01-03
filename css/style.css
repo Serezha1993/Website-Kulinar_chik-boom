@@ -12,6 +12,7 @@ body{
     font-optical-sizing: auto;
     font-style: normal;
     min-height: 100vh;
+   
     background: url("https://w0.peakpx.com/wallpaper/201/721/HD-wallpaper-chocolate-cake-blur-sweets-cake-with-cherry-dessert.jpg") no-repeat;
     background-size: cover;
     background-position: center;
@@ -270,31 +271,6 @@ body{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-/* Выпадающее меню */
-/* .navbar {
-    display: none; 
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgb(226, 204, 172); 
-    z-index: 10;
-    opacity: 0; 
-    transform: translateY(-20px); 
-    transition: opacity 0.3s ease, transform 0.3s ease; 
-} */
-
 #check:checked ~ .navbar {
     display: flex; /* Показываем меню */
     opacity: 1;
@@ -344,6 +320,215 @@ body{
 
 
 
+ /* SLIDER START */
+
+/* Slider Section */
+/* Основной стиль секции слайдера */
+/* Основные стили секции слайдера */
+.home-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Стили каждого слайда */
+.slider-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+}
+
+/* Активный слайд */
+.slider-item.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Затемнение поверх слайда */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Содержимое слайдера */
+.content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: "Poppins", sans-serif;
+}
+
+.subheading {
+    font-size: 2rem;
+    font-family: "Great Vibes", cursive;
+    color: #c8a97e;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .subheading {
+        font-size: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+
+/* Featured Section */
+ 
+
+/* Стили для секции меню */
+
+.featured {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 0;
+    background: #f8f9fa;
+    flex-wrap: wrap; /* Позволяет элементам переноситься на новую строку */
+
+}
+
+.featured-menus {
+    text-align: center;
+    max-width: 200px;
+    flex: 1 1 calc(25% - 20px); /* Элементы занимают 25% ширины с учётом отступов */
+    margin: 10px;
+}
+
+
+.featured-menus .menu-img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.featured-menus .text h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.featured-menus .text p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 0;
+}
+
+/* Адаптивность для планшетов (ширина до 768px) */
+@media (max-width: 768px) {
+    .featured-menus {
+        flex: 1 1 calc(50% - 20px); /* Элементы занимают 50% ширины */
+    }
+
+    .featured-menus .menu-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .featured-menus .text h3 {
+        font-size: 16px;
+    }
+
+    .featured-menus .text p {
+        font-size: 13px;
+    }
+}
+
+/* Адаптивность для мобильных устройств (ширина до 480px) */
+@media (max-width: 480px) {
+    .featured-menus {
+        flex: 1 1 calc(100% - 20px); /* Элементы занимают 100% ширины */
+    }
+
+    .featured-menus .menu-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .featured-menus .text h3 {
+        font-size: 14px;
+    }
+
+    .featured-menus .text p {
+        font-size: 12px;
+    }
+}
+
+
+
+.featured-menus .menu-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-menus .menu-img:hover {
+    transform: scale(1.1); /* Увеличение изображения */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+
+.featured-menus .text:hover h3 {
+    color: #c8a97e; /* Изменение цвета заголовка */
+    transition: color 0.3s ease;
+}
+
+
+
+/* SLIDER END  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -374,8 +559,6 @@ body{
 
 
 }
-
-    
 
   @media (max-width: 768px) { 
 

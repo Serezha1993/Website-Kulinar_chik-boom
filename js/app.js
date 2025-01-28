@@ -35,7 +35,110 @@ function changeSlide() {
 setInterval(changeSlide, 5000);
 
 
+// card pagination start
 
+const productsContainer = document.querySelector(".products");
+const paginationContainer = document.querySelector(".pagination");
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+
+let products = [...productsContainer.children]; // Сохраняем карточки в массив
+let currentPage = 1; // Текущая страница
+const visibleCount = 4; // Количество видимых карточек
+const totalPages = Math.ceil(products.length / visibleCount); // Всего страниц
+
+
+function updateVisibleCards() {
+  products.forEach((product, index) => {
+    const start = (currentPage - 1) * visibleCount;
+    const end = currentPage * visibleCount;
+
+    if (index >= start && index < end) {
+      product.style.display = "block"; // Показываем карточку
+    } else {
+      product.style.display = "none"; // Скрываем карточку
+    }
+  });
+
+  updatePaginationButtons();
+}
+
+
+
+
+
+
+// Создание кнопок пагинации
+function createPaginationButtons() {
+  paginationContainer.innerHTML = ""; // Очищаем контейнер
+
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement("button");
+    button.textContent = i;
+    button.classList.add("page-btn");
+    if (i === currentPage) {
+      button.classList.add("active");
+    }
+    button.addEventListener("click", () => {
+      currentPage = i;
+      updateVisibleCards();
+    });
+    paginationContainer.appendChild(button);
+  }
+}
+
+// Обновление кнопок пагинации
+function updatePaginationButtons() {
+  document.querySelectorAll(".page-btn").forEach((button, index) => {
+    if (index + 1 === currentPage) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  });
+}
+
+// Обработчики кнопок "Prev" и "Next"
+prevButton.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    updateVisibleCards();
+  }
+});
+
+nextButton.addEventListener("click", () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    updateVisibleCards();
+  }
+});
+
+// Инициализация
+createPaginationButtons();
+updateVisibleCards();
+
+
+
+
+
+
+
+
+
+
+
+// Функция плавного появления карточек
+function fadeInProducts() {
+  productsContainer.style.opacity = 0; // Начинаем с невидимости
+  setTimeout(() => {
+    productsContainer.style.opacity = 1; // Плавно возвращаем видимость
+  }, 200);
+}
+
+
+
+
+// card pagination end
 
 
 

@@ -530,10 +530,33 @@ h1 {
 
 }
 
-/* .header {
-    text-align: center;
-    margin-bottom: 20px;
-} */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  
+  .page-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .page-btn.active {
+    background-color: #f79aa3;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .page-btn:hover {
+    background-color: #f8b5c3;
+  }
+
+
 
 .products {
     display: flex;
@@ -556,6 +579,7 @@ h1 {
     transform: translateY(-5px);
 }
 
+
 .image img {
     max-width: 100%;
     border-radius: 8px;
@@ -567,10 +591,7 @@ h1 {
     font-weight: bold;
 }
 
-.stars i {
-    color: #f39c12;
-    margin: 0 2px;
-}
+
 
 .buy button {
     padding: 10px 20px;
@@ -585,11 +606,17 @@ h1 {
 
 .buy button:hover {
     background-color: #0056b3;
-}
+} 
+
+
 
 
 /* PRODUCT END  */
 
+
+
+
+/* calendar start */
 .calendar-container{
     display: flex;
     flex-wrap: wrap;
@@ -701,16 +728,6 @@ h1 {
     font-weight: bold;
   }
 
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 480px) {
   .container-cal {
     padding: 15px;
@@ -739,17 +756,11 @@ h1 {
   .month-selector span {
     font-size: 16px;
   }
-
-
-
-
 }
 
+/* calendar end */
 
-/* Calendar start */
 
-
-/* media calendar end */
 
 
 

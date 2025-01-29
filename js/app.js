@@ -36,7 +36,6 @@ setInterval(changeSlide, 5000);
 
 
 // card pagination start
-
 const productsContainer = document.querySelector(".products");
 const paginationContainer = document.querySelector(".pagination");
 const prevButton = document.getElementById("prev");
@@ -47,26 +46,33 @@ let currentPage = 1; // Текущая страница
 const visibleCount = 4; // Количество видимых карточек
 const totalPages = Math.ceil(products.length / visibleCount); // Всего страниц
 
+function updateVisibleCards(animated = true) {
+  if (animated) {
+    productsContainer.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+    productsContainer.style.opacity = "0";
+    productsContainer.style.transform = "translateX(-20px)";
 
-function updateVisibleCards() {
-  products.forEach((product, index) => {
-    const start = (currentPage - 1) * visibleCount;
-    const end = currentPage * visibleCount;
-
-    if (index >= start && index < end) {
-      product.style.display = "block"; // Показываем карточку
-    } else {
-      product.style.display = "none"; // Скрываем карточку
-    }
-  });
+    setTimeout(() => {
+      applyCardVisibility();
+      setTimeout(() => {
+        productsContainer.style.opacity = "1";
+        productsContainer.style.transform = "translateX(0)";
+      }, 50);
+    }, 400);
+  } else {
+    applyCardVisibility();
+  }
 
   updatePaginationButtons();
 }
 
-
-
-
-
+function applyCardVisibility() {
+  products.forEach((product, index) => {
+    const start = (currentPage - 1) * visibleCount;
+    const end = currentPage * visibleCount;
+    product.style.display = index >= start && index < end ? "block" : "none";
+  });
+}
 
 // Создание кнопок пагинации
 function createPaginationButtons() {
@@ -115,25 +121,7 @@ nextButton.addEventListener("click", () => {
 
 // Инициализация
 createPaginationButtons();
-updateVisibleCards();
-
-
-
-
-
-
-
-
-
-
-
-// Функция плавного появления карточек
-function fadeInProducts() {
-  productsContainer.style.opacity = 0; // Начинаем с невидимости
-  setTimeout(() => {
-    productsContainer.style.opacity = 1; // Плавно возвращаем видимость
-  }, 200);
-}
+updateVisibleCards(false);
 
 
 

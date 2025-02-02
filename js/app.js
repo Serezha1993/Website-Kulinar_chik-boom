@@ -35,98 +35,181 @@ function changeSlide() {
 setInterval(changeSlide, 5000);
 
 
+
+
+
+
+
+
 // card pagination start
 const productsContainer = document.querySelector(".products");
 const paginationContainer = document.querySelector(".pagination");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
+const pageInfo = document.getElementById("page-info");
 
-let products = [...productsContainer.children]; // Сохраняем карточки в массив
-let currentPage = 1; // Текущая страница
-const visibleCount = 4; // Количество видимых карточек
-const totalPages = Math.ceil(products.length / visibleCount); // Всего страниц
 
-function updateVisibleCards(animated = true) {
-  if (animated) {
-    productsContainer.style.transition = "opacity 0.4s ease, transform 0.4s ease";
-    productsContainer.style.opacity = "0";
-    productsContainer.style.transform = "translateX(-20px)";
 
-    setTimeout(() => {
-      applyCardVisibility();
-      setTimeout(() => {
-        productsContainer.style.opacity = "1";
-        productsContainer.style.transform = "translateX(0)";
-      }, 50);
-    }, 400);
-  } else {
-    applyCardVisibility();
-  }
+let products = [];
+let currentPage = 1;
+const itemsPerPage = 4;
 
-  updatePaginationButtons();
-}
-
-function applyCardVisibility() {
-  products.forEach((product, index) => {
-    const start = (currentPage - 1) * visibleCount;
-    const end = currentPage * visibleCount;
-    product.style.display = index >= start && index < end ? "block" : "none";
-  });
-}
-
-// Создание кнопок пагинации
-function createPaginationButtons() {
-  paginationContainer.innerHTML = ""; // Очищаем контейнер
-
-  for (let i = 1; i <= totalPages; i++) {
-    const button = document.createElement("button");
-    button.textContent = i;
-    button.classList.add("page-btn");
-    if (i === currentPage) {
-      button.classList.add("active");
-    }
-    button.addEventListener("click", () => {
-      currentPage = i;
-      updateVisibleCards();
+// Загрузка данных из JSON
+fetch("products.json")
+    .then(response => response.json())
+    .then(data => {
+        products = data;
+        renderProducts();
     });
-    paginationContainer.appendChild(button);
-  }
+
+function renderProducts() {
+    productsContainer.innerHTML = "";
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const visibleProducts = products.slice(start, end);
+
+    console.log(visibleProducts);
+
+    visibleProducts.forEach(product => {
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+        productElement.innerHTML = `
+            <img src="img/products/${product.img}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <span><strong>${product.price} ₽</strong></span>
+            <button class="buy-btn">Купить</button>
+        `;
+        productsContainer.appendChild(productElement);
+    });
+    
+    pageInfo.textContent = `Страница ${currentPage} из ${Math.ceil(products.length / itemsPerPage)}`;
+    
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === Math.ceil(products.length / itemsPerPage);
 }
 
-// Обновление кнопок пагинации
-function updatePaginationButtons() {
-  document.querySelectorAll(".page-btn").forEach((button, index) => {
-    if (index + 1 === currentPage) {
-      button.classList.add("active");
-    } else {
-      button.classList.remove("active");
-    }
-  });
-}
-
-// Обработчики кнопок "Prev" и "Next"
 prevButton.addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
-    updateVisibleCards();
-  }
+    if (currentPage > 1) {
+        currentPage--;
+        renderProducts();
+    }
 });
 
 nextButton.addEventListener("click", () => {
-  if (currentPage < totalPages) {
-    currentPage++;
-    updateVisibleCards();
-  }
+    if (currentPage < Math.ceil(products.length / itemsPerPage)) {
+        currentPage++;
+        renderProducts();
+    }
 });
 
-// Инициализация
-createPaginationButtons();
-updateVisibleCards(false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let products = [...productsContainer.children]; // Сохраняем карточки в массив
+// let currentPage = 1; // Текущая страница
+// const visibleCount = 4; // Количество видимых карточек
+// const totalPages = Math.ceil(products.length / visibleCount); // Всего страниц
+
+// function updateVisibleCards(animated = true) {
+//   if (animated) {
+//     productsContainer.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+//     productsContainer.style.opacity = "0";
+//     productsContainer.style.transform = "translateX(-20px)";
+
+//     setTimeout(() => {
+//       applyCardVisibility();
+//       setTimeout(() => {
+//         productsContainer.style.opacity = "1";
+//         productsContainer.style.transform = "translateX(0)";
+//       }, 50);
+//     }, 400);
+//   } else {
+//     applyCardVisibility();
+//   }
+
+//   updatePaginationButtons();
+// }
+
+// function applyCardVisibility() {
+//   products.forEach((product, index) => {
+//     const start = (currentPage - 1) * visibleCount;
+//     const end = currentPage * visibleCount;
+//     product.style.display = index >= start && index < end ? "block" : "none";
+//   });
+// }
+
+// // Создание кнопок пагинации
+// function createPaginationButtons() {
+//   paginationContainer.innerHTML = ""; // Очищаем контейнер
+
+//   for (let i = 1; i <= totalPages; i++) {
+//     const button = document.createElement("button");
+//     button.textContent = i;
+//     button.classList.add("page-btn");
+//     if (i === currentPage) {
+//       button.classList.add("active");
+//     }
+//     button.addEventListener("click", () => {
+//       currentPage = i;
+//       updateVisibleCards();
+//     });
+//     paginationContainer.appendChild(button);
+//   }
+// }
+
+// // Обновление кнопок пагинации
+// function updatePaginationButtons() {
+//   document.querySelectorAll(".page-btn").forEach((button, index) => {
+//     if (index + 1 === currentPage) {
+//       button.classList.add("active");
+//     } else {
+//       button.classList.remove("active");
+//     }
+//   });
+// }
+
+// // Обработчики кнопок "Prev" и "Next"
+// prevButton.addEventListener("click", () => {
+//   if (currentPage > 1) {
+//     currentPage--;
+//     updateVisibleCards();
+//   }
+// });
+
+// nextButton.addEventListener("click", () => {
+//   if (currentPage < totalPages) {
+//     currentPage++;
+//     updateVisibleCards();
+//   }
+// });
+
+// // Инициализация
+// createPaginationButtons();
+// updateVisibleCards(false);
 
 
 
 
 // card pagination end
+
+
+
+
+
 
 
 
